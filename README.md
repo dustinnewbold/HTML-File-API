@@ -1,5 +1,5 @@
-# HTML-File-API
-A demo for HTML5's File API
+# HTML FileAPI Demos
+Below are a few demos for HTML5's File API. *Note: these demos may not work in all browsers.*
 
 ## Read File Meta Information
 You can read meta information with most browsers by simply accessing the File object provided by the `input[type=file]` element. In the below example, the input[type=file] has an ID of **singleFileInfo**.
@@ -55,6 +55,24 @@ function displayFileContents() {
 			});
 			contentsBody.appendChild(tr);
 		});
+	}
+}
+```
+
+
+## Preview Image
+This example is really useful when wanting to preview an image before actually uploading. This demo will take a selected image and create a base64 URL for the selected image and then change the src of an `image` element. In this demo, we have an `input[type=file]` element with an ID of **singleFileThumbnail** as well as an `img` element with an ID of `fileThumbnail`.
+
+```javascript
+var fileInput = document.getElementById('singleFileThumbnail');
+fileInput.addEventListener('change', displayFileContents);
+
+function displayFileContents() {
+	var reader = new FileReader();
+	reader.readAsDataURL(fileInput.files[0]);
+
+	reader.onload = function(e) {
+		document.getElementById('fileThumbnail').src = reader.result;
 	}
 }
 ```
