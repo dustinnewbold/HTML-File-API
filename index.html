@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>Bootstrap 101 Template</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+</head>
+<body>
+	<div class="container">
+		<h1>HTML – File API</h1>
+		
+		<h2>
+			Read File Information
+		</h2>
+		<p>
+			With file inputs, you can read a lot of file meta information.
+		</p>
+		<form>
+			<!-- <div class="form-group">
+				<label for="exampleInputEmail1">Email address</label>
+				<input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+			</div> -->
+			<div class="form-group">
+				<label for="singleFileInfo">
+					File Input
+				</label>
+				<input type="file" id="singleFileInfo" />
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>
+								File Name
+							</th>
+							<th>
+								File Type
+							</th>
+							<th>
+								File Size
+							</th>
+							<th>
+								Last Modified
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td id="singleFileName">
+								–
+							</td>
+							<td id="singleFileType">
+								–
+							</td>
+							<td id="singleFileSize">
+								–
+							</td>
+							<td id="singleFileModified">
+								–
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+			<script>
+				;(function() {
+					var fileInput = document.getElementById('singleFileInfo');
+					fileInput.addEventListener('change', displayFileInformation);
+
+					function displayFileInformation() {
+						document.getElementById('singleFileName').innerHTML = fileInput.files[0].name;
+						document.getElementById('singleFileType').innerHTML = fileInput.files[0].type;
+						document.getElementById('singleFileSize').innerHTML = Math.round((fileInput.files[0].size * 10) / 1024) / 10 + ' Kb';
+						document.getElementById('singleFileModified').innerHTML = fileInput.files[0].lastModifiedDate;
+						text = fileInput.files[0].lastModifiedDate;
+					}
+				})();
+			</script>
+		</form>
+	</div>
+
+	<div class="container">
+		<h2>
+			Read File Contents
+		</h2>
+		<p>
+			For this demo, please select a CSV file. Here's a <a href="sample.csv">sample CSV</a> to test.
+		</p>
+		<form>
+			<div class="form-group">
+				<label for="singleFileContents">
+					File Input
+				</label>
+				<input type="file" id="singleFileContents" />
+				<p class="help-block">
+					Select a CSV file to see it's data displayed below.
+				</p>
+				<table class="table table-striped">
+					<thead>
+						<tr id="contentsHeader">
+							<th>
+								–
+							</th>
+						</tr>
+					</thead>
+					<tbody id="contentsBody">
+						<tr>
+							<td>
+								-
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+			<script>
+				;(function() {
+					var fileInput = document.getElementById('singleFileContents'),
+						contentsHeader = document.getElementById('contentsHeader'),
+						contentsBody = document.getElementById('contentsBody');
+					fileInput.addEventListener('change', displayFileContents);
+
+					function displayFileContents() {
+						var reader = new FileReader();
+						reader.readAsText(fileInput.files[0]);
+
+						// Clear all the things
+						contentsHeader.innerHTML = '';
+						contentsBody.innerHTML = '';
+
+						reader.onload = function(e) {
+							var contents = reader.result,
+								lines = contents.split('\n'),
+								headers = lines.shift().split(',');
+
+							headers.forEach(function(header) {
+								var th = document.createElement('th');
+								th.appendChild(document.createTextNode(header));
+								contentsHeader.appendChild(th);
+							});
+
+							lines.forEach(function(line) {
+								var values = line.split(','),
+									tr = document.createElement('tr');
+								values.forEach(function(value) {
+									var td = document.createElement('td');
+									td.appendChild(document.createTextNode(value));
+									tr.appendChild(td);
+								});
+								contentsBody.appendChild(tr);
+							});
+						}
+					}
+				})();
+			</script>
+		</form>
+	</div>
+
+
+	<div class="container">
+		<h2>
+			Generate Thumbnail
+		</h2>
+		<p>
+			For this demo, please select an image
+		</p>
+		<form>
+			<div class="form-group">
+				<label for="singleFileThumbnail">
+					File Input
+				</label>
+				<input type="file" id="singleFileThumbnail" />
+				<img class="img-circle" id="fileThumbnail" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgdmlld0JveD0iMCAwIDE0MCAxNDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjwhLS0KU291cmNlIFVSTDogaG9sZGVyLmpzLzE0MHgxNDAKQ3JlYXRlZCB3aXRoIEhvbGRlci5qcyAyLjYuMC4KTGVhcm4gbW9yZSBhdCBodHRwOi8vaG9sZGVyanMuY29tCihjKSAyMDEyLTIwMTUgSXZhbiBNYWxvcGluc2t5IC0gaHR0cDovL2ltc2t5LmNvCi0tPjxkZWZzPjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+PCFbQ0RBVEFbI2hvbGRlcl8xNGVkNjk4YWUzYyB0ZXh0IHsgZmlsbDojQUFBQUFBO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1mYW1pbHk6QXJpYWwsIEhlbHZldGljYSwgT3BlbiBTYW5zLCBzYW5zLXNlcmlmLCBtb25vc3BhY2U7Zm9udC1zaXplOjEwcHQgfSBdXT48L3N0eWxlPjwvZGVmcz48ZyBpZD0iaG9sZGVyXzE0ZWQ2OThhZTNjIj48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI0VFRUVFRSIvPjxnPjx0ZXh0IHg9IjQ0LjA0Njg3NSIgeT0iNzQuNSI+MTQweDE0MDwvdGV4dD48L2c+PC9nPjwvc3ZnPg==" style="max-width: 140px; max-height: 140px;">
+			</div>
+
+			<script>
+				;(function() {
+					var fileInput = document.getElementById('singleFileThumbnail');
+					fileInput.addEventListener('change', displayFileContents);
+
+					function displayFileContents() {
+						var reader = new FileReader();
+						reader.readAsDataURL(fileInput.files[0]);
+
+						reader.onload = function(e) {
+							document.getElementById('fileThumbnail').src = reader.result;
+						}
+					}
+				})();
+			</script>
+		</form>
+	</div>
+
+
+
+
+</body>
+</html>
