@@ -3,6 +3,7 @@ A demo for HTML5's File API
 
 ## Read File Meta Information
 You can read meta information with most browsers by simply accessing the File object provided by the input[type=file] element. In the below example, the input[type=file] has an ID of *singleFileInfo*
+
     var fileInput = document.getElementById('singleFileInfo');
     fileInput.addEventListener('change', displayFileInformation);
     
